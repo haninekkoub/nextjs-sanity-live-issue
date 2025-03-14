@@ -11,14 +11,12 @@ export default async function Home({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-
   const query = `*[_type == "hero" && locale == $locale][0]{...}`;
-  const page = await sanityFetch({ query, params: { locale } });
-
+  const { data } = await sanityFetch({ query, params: { locale } });
   return (
     <div>
       <h1>Locale: {locale}</h1>
-      <h1>{page.data.title}</h1>
+      {data && <h1>{data.title}</h1>}
     </div>
   );
 }
